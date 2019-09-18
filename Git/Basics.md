@@ -9,7 +9,7 @@
 
 #### Delete branch
     git branch -d <branch-name>
-
+    git push --delete <remote_name> <branch_name>
 
 ---
 ## Reset local changes
