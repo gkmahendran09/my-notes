@@ -18,3 +18,7 @@ for index, row in df.iterrows():
 ## Drop Columns by Index
 
 ` df.drop(df.columns[[0, 4, 2]], axis = 1, inplace = True)  `
+
+## Insert Columns by Index
+
+` df.insert(0, 'Name_Upper', [d.upper() for d in df.names]) `
