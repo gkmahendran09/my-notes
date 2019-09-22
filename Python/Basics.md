@@ -22,3 +22,15 @@ def convert_datetime_to_time_stamp(from_datetime):
 from_datetime = datetime.date(2017, 6, 30)
 convert_datetime_to_time_stamp(from_datetime)
 ```
+
+## Make API Call
+`pip install requests`
+
+`import requests`
+
+```
+def fetch_data(url, payload):
+    result = requests.get(url, params=payload).json()
+    
+    return result
+```
