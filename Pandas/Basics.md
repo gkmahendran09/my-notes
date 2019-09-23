@@ -1,3 +1,8 @@
+## Filter only few Rows
+
+` df.iloc[[0,1,2], :] `
+
+
 ## Filter only few Columns
 
 ` df['col_name'] `
