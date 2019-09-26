@@ -34,3 +34,10 @@ def fetch_data(url, payload):
     
     return result
 ```
+
+
+## Ternary Operator
+
+`[on_true] if [expression] else [on_false]`
+
+`a if a < b else b`
