@@ -71,3 +71,13 @@ print('Date:', date_time_obj.date())
 print('Time:', date_time_obj.time())
 print('Date-time:', date_time_obj)
 ```
+
+## strftime() - datetime object to string
+
+```
+from datetime import datetime
+# current date and time
+now = datetime.now()
+s1 = now.strftime("%m/%d/%Y, %H:%M:%S")
+# mm/dd/YY H:M:S format
+```
