@@ -41,3 +41,19 @@ def fetch_data(url, payload):
 `[on_true] if [expression] else [on_false]`
 
 `a if a < b else b`
+
+
+## Get first/last day of the previous month
+
+```
+from datetime import date
+from dateutil.relativedelta import relativedelta
+today = date.today()
+d = today - relativedelta(months=1)
+
+date(d.year, d.month, 1)
+>>> datetime.date(2008, 12, 1)
+
+date(today.year, today.month, 1) - relativedelta(days=1)
+>>> datetime.date(2008, 12, 31)
+```
