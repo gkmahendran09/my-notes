@@ -27,3 +27,13 @@ for index, row in df.iterrows():
 ## Insert Columns by Index
 
 ` df.insert(0, 'Name_Upper', [d.upper() for d in df.names]) `
+
+
+## Drop Row By Index
+`df.drop(0)`
+`df.drop([0,1])`
+
+## Drop Row By Condition
+```
+df.drop(df[df['Age'] < 25].index, inplace = True)
+```
