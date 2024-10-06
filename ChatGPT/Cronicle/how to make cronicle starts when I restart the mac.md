@@ -1,57 +1,73 @@
 # how to make cronicle starts when I restart the mac
 
-To configure **Yahoo Mail** in **Thunderbird**, follow these steps:
+To make **Cronicle** start automatically when you restart your Mac, you can set it up as a **launch agent** using a `plist` (property list) file. Here's a step-by-step guide:
 
-### 1. Enable Yahoo Mail for third-party apps
+### 1. Create a `plist` file
 
-Ensure your Yahoo account allows access for third-party email clients like Thunderbird:
+You’ll need to create a **launch agent** file that will instruct macOS to start Cronicle at boot.
 
-1. Sign in to your Yahoo account via a browser.
-2. Go to **Account Security** under **Account Info**.
-3. If two-step verification is enabled, you'll need to generate an **app password**:
-   - Click **Generate app password**.
-   - Select **Other app**, type **Thunderbird**, and click **Generate**.
-   - Copy the app password, as you'll use it in Thunderbird instead of your regular Yahoo password.
+- Open Terminal and create a directory for the LaunchAgents if it doesn’t already exist:
 
-### 2. Open Thunderbird and add your Yahoo account
+  ```bash
+  mkdir -p ~/Library/LaunchAgents
+  ```
 
-1. **Open Thunderbird**.
-2. Click on the **Menu** button (≡) in the top-right corner and go to **Account Settings**.
-3. Select **Account Actions** > **Add Mail Account**.
+- Now, create a `plist` file (e.g., `com.cronicle.start.plist`):
 
-### 3. Enter your Yahoo Mail account details
+  ```bash
+  nano ~/Library/LaunchAgents/com.cronicle.start.plist
+  ```
 
-- **Your name**: The name you want to display on sent emails.
-- **Email address**: Your Yahoo Mail address (e.g., `yourname@yahoo.com`).
-- **Password**: Use the app password you generated from Yahoo (if applicable).
+### 2. Edit the `plist` file
 
-Then click **Continue**.
+Inside the `plist` file, add the following content. Adjust the paths and commands based on where Cronicle is installed and how it’s started:
 
-### 4. Thunderbird will attempt to configure automatically
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.cronicle.start</string>
+    <key>ProgramArguments</key>
+    <array>
+        <string>/usr/local/bin/node</string>
+        <string>/path/to/cronicle/bin/control.sh</string>
+        <string>start</string>
+    </array>
+    <key>RunAtLoad</key>
+    <true/>
+    <key>KeepAlive</key>
+    <true/>
+    <key>StandardOutPath</key>
+    <string>/tmp/cronicle.stdout</string>
+    <key>StandardErrorPath</key>
+    <string>/tmp/cronicle.stderr</string>
+</dict>
+</plist>
+```
 
-Thunderbird may auto-detect the Yahoo Mail server settings. If not, you can enter them manually:
+- Replace `/path/to/cronicle/bin/control.sh` with the actual path to the `control.sh` script that starts Cronicle.
 
-### Manual Settings
+### 3. Load the Launch Agent
 
-#### Incoming Mail Server (IMAP)
+After creating and saving the `plist` file, load it into **launchctl** (macOS's service manager):
 
-- **Protocol**: IMAP
-- **Server**: `imap.mail.yahoo.com`
-- **Port**: 993
-- **Connection Security**: SSL/TLS
-- **Authentication Method**: OAuth2 (preferred) or Normal password (if you're using an app password)
+```bash
+launchctl load ~/Library/LaunchAgents/com.cronicle.start.plist
+```
 
-#### Outgoing Mail Server (SMTP)
+This will load and start Cronicle automatically when your Mac restarts.
 
-- **Server**: `smtp.mail.yahoo.com`
-- **Port**: 465 or 587
-- **Connection Security**: SSL/TLS
-- **Authentication Method**: OAuth2 (preferred) or Normal password (if you're using an app password)
+### 4. Test the Launch Agent
 
-Click **Done** once the settings are entered.
+You can test the launch agent by unloading and loading it again:
 
-### 5. Finalize and Test
+```bash
+launchctl unload ~/Library/LaunchAgents/com.cronicle.start.plist
+launchctl load ~/Library/LaunchAgents/com.cronicle.start.plist
+```
 
-Thunderbird should now sync your Yahoo Mail. You can check if the setup is correct by sending and receiving test emails.
+This ensures that Cronicle starts properly as defined by the `plist`.
 
-Let me know if you run into any issues during the configuration!
+Let me know if you need further assistance with setting up!
