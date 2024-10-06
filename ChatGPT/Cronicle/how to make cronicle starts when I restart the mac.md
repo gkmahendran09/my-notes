@@ -31,7 +31,6 @@ Inside the `plist` file, add the following content. Adjust the paths and command
     <string>com.cronicle.start</string>
     <key>ProgramArguments</key>
     <array>
-        <string>/usr/local/bin/node</string>
         <string>/opt/cronicle/bin/control.sh</string>
         <string>start</string>
     </array>
