@@ -6,16 +6,16 @@ To make **Cronicle** start automatically when you restart your Mac, you can set 
 
 You’ll need to create a **launch agent** file that will instruct macOS to start Cronicle at boot.
 
-- Open Terminal and create a directory for the LaunchAgents if it doesn’t already exist:
+- Open Terminal and create a directory for the LaunchDaemons if it doesn’t already exist:
 
   ```bash
-  mkdir -p /Library/LaunchAgents
+  mkdir -p /Library/LaunchDaemons
   ```
 
 - Now, create a `plist` file (e.g., `com.cronicle.start.plist`):
 
   ```bash
-  nano /Library/LaunchAgents/com.cronicle.start.plist
+  nano /Library/LaunchDaemons/com.cronicle.start.plist
   ```
 
 ### 2. Edit the `plist` file
@@ -54,7 +54,7 @@ Inside the `plist` file, add the following content. Adjust the paths and command
 After creating and saving the `plist` file, load it into **launchctl** (macOS's service manager):
 
 ```bash
-launchctl load /Library/LaunchAgents/com.cronicle.start.plist
+launchctl load /Library/LaunchDaemons/com.cronicle.start.plist
 ```
 
 This will load and start Cronicle automatically when your Mac restarts.
@@ -64,8 +64,8 @@ This will load and start Cronicle automatically when your Mac restarts.
 You can test the launch agent by unloading and loading it again:
 
 ```bash
-launchctl unload /Library/LaunchAgents/com.cronicle.start.plist
-launchctl load /Library/LaunchAgents/com.cronicle.start.plist
+launchctl unload /Library/LaunchDaemons/com.cronicle.start.plist
+launchctl load /Library/LaunchDaemons/com.cronicle.start.plist
 ```
 
 This ensures that Cronicle starts properly as defined by the `plist`.
